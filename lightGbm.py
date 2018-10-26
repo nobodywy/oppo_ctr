@@ -53,8 +53,8 @@ params = {
     'boosting_type': 'gbdt',
     'objective': 'binary',
     'metric': 'binary_logloss',
-    'num_leaves': 32,
-    'learning_rate': 0.05,
+    'num_leaves': 16,
+    'learning_rate': 0.05, #0.01
     'feature_fraction': 0.9,
     'bagging_fraction': 0.8,
     'bagging_freq': 5,
@@ -75,7 +75,7 @@ for k, (train_in, test_in) in enumerate(skf.split(X, y)):
                     early_stopping_rounds=50,
                     verbose_eval=50,
                     )
-    print('f1_score:',f1_score(y_test, np.where(gbm.predict(X_test, num_iteration=gbm.best_iteration)>0.5, 1,0)))
+    print('f1_score:',f1_score(y_test, np.where(gbm.predict(X_test, num_iteration=gbm.best_iteration)>0.45, 1,0)))
     xx_logloss.append(gbm.best_score['valid_0']['binary_logloss'])
     xx_submit.append(gbm.predict(X_test_, num_iteration=gbm.best_iteration))
 
